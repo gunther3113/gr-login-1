@@ -23,11 +23,14 @@ app.use(bodyParser.json())
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-const client = new Client({
-	connectionString: process.env.DATABASE_URL
-});
+
 
 async function query (q, params) {
+
+    const client = new Client({
+    	connectionString: process.env.DATABASE_URL
+    });
+
   await client.connect()
   let res
   try {

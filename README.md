@@ -20,6 +20,11 @@ In order to run this project node.js and npm both need to have been installed.
 - sanitize inputs
 - commas
 - imports
+- node tests
+- client tests
+- client side validation
+- server side validation
+
 
 
 
