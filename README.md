@@ -15,6 +15,14 @@ In order to run this project node.js and npm both need to have been installed.
 
 </ol>
 
+
+## Todo 
+- sanitize inputs
+- commas
+- imports
+
+
+
 ## References:
 
 
