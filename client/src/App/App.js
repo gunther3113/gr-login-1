@@ -8,22 +8,25 @@ import Signin from "./pages/Signin";
 import axios from "axios";
 import Navbar from './components/Nav';
 
-const App = () => {
+const App = async () => {
 
-    const [userInfo] = useState();
+    const [user, setUser] = useState();
 
-    // const loggedInOrOut = () => {
-    //     // get user information and update state
-    //     axios.post('/api/SignUp', customerSignUp)
-    //         .then(function (response) {
-    //           console.log(response)
-    //         })
-    //         .catch(function (error) {
-    //           console.log(error)
-    //         })
-    // }
+    const loggedInOrOut = () => {
+        // get user information and update state
+        axios.post('/api/SignUp', customerSignUp)
+            .then(function (response) {
+              console.log(response)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+    }
 
-
+    const getUser = async () => {
+        const response = await axios.get("/some_url_endpoint");
+        return await response.json();
+    }
 
 
     return (

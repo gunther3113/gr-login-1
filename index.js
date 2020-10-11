@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const session = require("express-session");
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 const result = require('dotenv').config();
 if (result.error) {
@@ -20,14 +21,9 @@ app.use(bodyParser.json())
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-
-
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({secret: 'keyboard cat'}))
-
 
 require('./lib/routes.js')(app);
 

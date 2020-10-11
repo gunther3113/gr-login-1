@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Nav';
-
 
 const Home = () => {
     return (
     <div className="App">
-
-
-      <h1>Project Home</h1>
-      {/* Link to List.js */}
-      <Link to={'./list'}>
-        <button variant="raised">
-            My List
-        </button>
-      </Link>
-      <Link to={'./signup'}>
-      <button variant="raised">
-          Signup
-      </button>
-      </Link>
+      <h1>Welcome</h1>
+        <p>
+            Please <Link to={'./signin'}>Sign In</Link> OR <Link to={'./signin'}>Sign Up</Link>
+        </p>
     </div>
     );
 }
