@@ -1,10 +1,7 @@
 const express = require('express');
 const path = require('path');
-const { Client } = require('pg');
-const { v4 } = require('uuid');
+const session = require("express-session");
 const bodyParser = require('body-parser');
-
-
 
 const result = require('dotenv').config();
 if (result.error) {
@@ -25,50 +22,14 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 
-async function query (q, params) {
-
-    const client = new Client({
-    	connectionString: process.env.DATABASE_URL
-    });
-
-  await client.connect()
-  let res
-  try {
-    await client.query('BEGIN')
-    try {
-      res = await client.query(q, params)
-      await client.query('COMMIT')
-    } catch (err) {
-      await client.query('ROLLBACK')
-      throw err
-    }
-  } finally {
-    client.end()
-  }
-  return res
-}
 
 
-// An api endpoint that returns a short list of items
-app.get('/api/getList', async (req,res) => {
-	const dbInfo = await query("select * from public.users");
-	var list = ["item1", "item2", "item3", JSON.stringify(dbInfo.rows) ];
-	res.json(list);
-	console.log('Sent list of items');
-});
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(session({secret: 'keyboard cat'}))
 
 
-app.post('/api/signup', async (req,res) => {
-    console.log(req.body);
-	await query('INSERT INTO public.users (id, firstName, lastName, email, password) VALUES ($1, $2, $3, $4, $5)',
-        [v4(), req.body.firstName, req.body.lastName, req.body.email, req.body.password]);
-	res.end();
-});
-
-// Handles any requests that don't match the ones above
-app.get('*', (req,res) =>{
-	res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
+require('./lib/routes.js')(app);
 
 const port = process.env.PORT || 5000;
 app.listen(port);
