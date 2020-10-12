@@ -1,40 +1,41 @@
-import React, {useCallback} from 'react'
-import axios from 'axios'
+import React from 'react'
 import Nav from 'react-bootstrap/Nav';
+import { useLocation } from "react-router-dom";
 
 const Navbar = (props) => {
 
-    const loggedIn = props && props.user.props.user.firstName || false;
+    const name = props.user && props.user.firstName ? props.user.firstName + ' ' + props.user.lastName : null;
 
-    const logout = useCallback((e) => {
-        e.preventDefault()
-        axios.post('/api/logout')
-            .then(function (response) {
-                console.log(response)
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    });
+    const logout = () => {
+        props.logInOrOut();
+    }
+    let location = useLocation();
     return (
         <Nav
-            activeKey="/home"
+            fill variant="tabs"
+            activeKey="`${location.pathname}`"
             onSelect={(eventKey, e) => logout(e)}
         >
-            {loggedIn ?
+            {name ?
                 (
                     <React.Fragment>
                         <Nav.Item>
-                            <Nav.Link>Welecome `${loggedIn}`</Nav.Link>
+                            <Nav.Link>Welecome `${name}`</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link eventKey="logout">Sign Out</Nav.Link>
                         </Nav.Item>
                     </React.Fragment>
                 ) : (
-                    <Nav.Item>
-                        <Nav.Link href="/signin">Sign In</Nav.Link>
-                    </Nav.Item>)
+                    <React.Fragment>
+                        <Nav.Item>
+                            <Nav.Link eventKey='/signin' href="/signin">Sign In</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link eventKey='/signup' href="/signup">Sign Up</Nav.Link>
+                        </Nav.Item>
+                    </React.Fragment>
+                )
             }
         </Nav>
     );

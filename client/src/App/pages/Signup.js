@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 const Signup = () => {
     const [customerSignUp, setCustomerSignUp] = useState(
         { email: '', password: '', firstName: '', lastName: ''}
@@ -21,6 +24,9 @@ const Signup = () => {
           })
     }
     return (
+
+
+
           <div className="container">
               <form className='white' onSubmit={handleSubmit}>
                   <h5 className="grey-text.text-darken-3">Sign Up With Email</h5>

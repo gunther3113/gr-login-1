@@ -1,44 +1,30 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-const Signup = () => {
-    const [customerSignUp, setCustomerSignUp] = useState(
-        { email: '', password: '', firstName: '', lastName: ''}
-    );
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
-    const handleChange = (event) => {
-        setCustomerSignUp({...customerSignUp, [event.target.name]: event.target.value})
-    }
+const Signin = () => {
 
-    const handleSubmit = (e) => {
-      e.preventDefault()
-      axios.post('/api/SignUp', customerSignUp)
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-    }
+        const handleSubmit = (event) => {
+           const form = event.currentTarget;
+           console.log(form);
+         };
     return (
-          <div className="container">
-              <form className='white' onSubmit={handleSubmit}>
-                  <h5 className="grey-text.text-darken-3">Sign Up With Email</h5>
-                  <div className="input-field">
-                      <label htmlFor="firstName">First Name</label>
-                      <input type="text" name="firstName" value={customerSignUp.firstName} onChange={handleChange} required /> <br/>
-                      <label htmlFor="lastName">Last Name</label>
-                      <input type="text" name="lastName" value={customerSignUp.lastName} onChange={handleChange} required /><br/>
-                      <label htmlFor="lastName">Email</label>
-                      <input type="email" name="email" value={customerSignUp.email} onChange={handleChange} required /><br/>
-                      <label htmlFor="password">Password</label>
-                      <input type="password" name="password" value={customerSignUp.password} onChange={handleChange} required /><br/>
-                  </div>
-                  <div className="input-field">
-                      <button className="btn blue darken-3" type="submit">Sign Up</button>
-                  </div>
-              </form>
-          </div>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control  type="email" placeholder="Enter email" />
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Sign In
+          </Button>
+        </Form>
       );
   }
-  export default Signup;
+  export default Signin;
